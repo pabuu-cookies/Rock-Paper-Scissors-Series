@@ -140,7 +140,7 @@
     <div id="scoreboard"></div>
     <canvas id="confetti"></canvas> 
     <aside id="sidebar">
-        <b>Rock Paper Scissors</b>
+        <b><a href="index.html">Rock Paper Scissors</a></b>
         <button id = "anotherround" onclick="AnotherRound()">Play Again</button>
         <button id = "bestofthree" onclick="window.location.href='rounds.html?bestOf=3'">Best Of Three</button>
         <button id = "bestoffive" onclick="window.location.href='rounds.html?bestOf=5'">Best Of Five</button>
@@ -314,7 +314,7 @@
                     textElement.id = 'dynamicText';
                     document.body.appendChild(textElement);
                     if ("vibrate" in navigator) {
-                        navigator.vibrate(2000); 
+                        navigator.vibrate(20); 
                         console.log('vibration');// Vibrate for 200 milliseconds
                     } else {
                         console.log("Vibration not supported");
