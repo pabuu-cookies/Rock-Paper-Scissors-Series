@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-Paper-Scissors</title>
+    <style>
+        body {
+          position:fixed;
+          background-image: url(RPS.png);
+          font-family: Arial, sans-serif;
+          text-align: center;
+        }
+        #result {
+          position: fixed;
+          font-size: 5vh;
+          color: black;
+          margin-top:45vh ;
+          margin-left: 44vw;
+          opacity: 0; 
+          transition: opacity 1s ease-in-out 0.5s; 
+          z-index : 1000;
+        }
+        button {
+            background-color: burlywood;
+            color: rgb(15, 15, 15);
+            font-weight: bold;
+            padding: 0.75vw 2vh;
+            border: none;
+            border-radius: 1vh;
+            cursor: pointer;
+        }
+        button:active {
+            background-color: #7a3f08; /* Change background color */
+            border: 0.05vw solid #e9e7e5; /* Add border */
+        }
+        #player{
+            position: fixed; /* Positioning the div relative to the viewport */
+            bottom: 0; /* Aligning the div to the bottom */
+            margin-bottom: 10vh;
+            left: 50%;  /* Centering the div horizontally */
+            transform: translateX(-50%);
+            color: black;
+            font-size: 5vh;
+        }
+        #player *{
+            margin-bottom:1vh;
+        }
+        #computer{
+            position: fixed; /* Positioning the div relative to the viewport */
+            top: 0; /* Aligning the div to the bottom */
+            margin-top: 10vh;
+            margin-left: 50vw;  /* Centering the div horizontally */
+            transform: translateX(-10vw);
+            color: black;
+            font-size: 5vh;
+        }
+        #sidebar {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            background-color: #08044462; 
+            padding: 2.5vh; 
+            display: flex;  
+            align-items: center;
+            justify-content: space-between;
+        }
+        #sidebar button {
+            margin-right:  3.5vw ;
+            justify-content: space-evenly; 
+            
+        } 
+        #sidebar b {
+            color: rgba(255, 255, 255, 0.61);
+            text-align: left;
+            margin-left: 1vw;
+            font-size: 3vw;
+            font-weight: 120;
+            font-family: 'Gill Sans';
+        }
+        @keyframes slidein {
+            from {
+                transform: translateY(-2vh);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-8vh);
+                opacity: 1;
+            }
+        }
+        .player_images {
+            position: fixed;
+            top: 62vh;
+            left: 45vw;
+            max-width: 30vw; 
+            max-height: 20vh; 
+            opacity: 0; 
+            animation: slidein 0.3s linear 0s forwards;
+        }
+        @keyframes slideout {
+            from {
+                transform: translateY(10vh) scaleY(-1) ;
+                opacity: 1;
+            }
+            to {
+                transform: translateY(14vh) scaleY(-1) ;
+                opacity: 1;
+            }
+        }
+        .computer_images {
+            position: fixed;
+            top: 10vh;
+            left: 45vw;
+            max-width: 30vw; 
+            max-height: 20vh; 
+            opacity: 0;
+            animation: slideout 0.3s linear 0s forwards;
+        }
+      </style>
+</head>
+<body>
+    <div id="result"></div>
+    <canvas id="confetti"></canvas> 
+    <aside id="sidebar">
+        <b>Rock Paper Scissors</b>
+        <button id = "anotherround" onclick="AnotherRound()">Play Again</button>
+        <button id = "bestofthree" onclick="window.location.href='rounds.html?bestOf=3'">Best Of Three</button>
+        <button id = "bestoffive" onclick="window.location.href='rounds.html?bestOf=5'">Best Of Five</button>
+    </aside>
+    <div id="computer">
+        <p><b>computer's choice:</b></p>
+    </div> 
+    <div id="player">
+        <p><b>Your choice:</b></p>
+        <button id = "rock" onclick="play('rock')">Rock</button>
+        <button id= "paper" onclick="play('paper')">Paper</button>
+        <button id ="scissors" onclick="play('scissors')">Scissors</button>
+    </div>
+        
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script>
+    function AnotherRound(){
+        location.reload();
+    }
+    function displayimages(choice, classname){
+        if (choice == 'rock'){
+            var button = document.getElementById('rock');
+            if (classname == "player_images"){
+                button.style.opacity = '0.5'; 
+            }
+            var image = document.createElement('img');
+            image.src = 'rock.jpeg'; // Set the image source
+            image.alt = 'Rock';
+            image.classList.add(classname)
+            document.body.appendChild(image);
+        }
+        else if (choice== 'paper'){
+            var button = document.getElementById('paper');
+            if (classname == "player_images"){
+                button.style.opacity = '0.5'; 
+            }
+            var image = document.createElement('img');
+            image.src = 'paper.jpeg'; // Set the image source
+            image.alt = 'paper';
+            image.classList.add(classname)
+            document.body.appendChild(image);
+        }
+        else if (choice=='scissors'){
+            var button = document.getElementById('scissors');
+            if (classname == "player_images"){
+                button.style.opacity = '0.5'; 
+            }
+            var image = document.createElement('img');
+            image.src = 'scissors.png'; // Set the image source
+            image.alt = 'scissors';
+            image.classList.add(classname)
+            document.body.appendChild(image);
+        }
+    }
+    function throwConfetti(resultis){
+        console.log('confetti falna diyena ');
+        var canvas=document.querySelector('#confetti');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        console.log(canvas.width, canvas.height, window.innerWidth, innerHeight);
+        var jsConfetti = new JSConfetti({ canvas });
+        if (resultis =="It's a tie!"){
+                jsConfetti.addConfetti({
+                    emojis: ['💫', '🌸'],
+                    emojiSize: 30,
+                    confettiNumber: 100,
+                })
+        }
+        else if (resultis =="You Won!"){
+                jsConfetti.addConfetti({
+                    emojis: ['✨','🎈'],
+                    emojiSize: 30,
+                    confettiNumber: 100,
+                })
+        }
+        else if (resultis =='You Lost!'){
+                jsConfetti.addConfetti({
+                    emojis: ['🤓','⚡'],
+                    emojiSize: 30,
+                    confettiNumber: 100, 
+                })
+        }
+    }    
+    function play(playerChoice) { 
+        document.getElementById('rock').disabled = true;
+        document.getElementById('paper').disabled = true;
+        document.getElementById('scissors').disabled = true;   
+        displayimages(playerChoice,'player_images');
+        var choices = ['rock', 'paper', 'scissors'];
+        var computerChoice = choices[Math.floor(Math.random() * choices.length)];
+        displayimages(computerChoice,'computer_images');
+            var result;
+            if (playerChoice === computerChoice) {
+                result = "It's a tie!";
+            } else if (
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                result= "You Won!";
+            } else {
+                result = "You Lost!";
+            }
+            
+            var audio = new Audio();
+            audio.src = 'rock-paper-scissors.wav';
+            audio.play();
+            throwConfetti(result);
+
+        var resultText = document.getElementById('result'); 
+        resultText.textContent = result; 
+        resultText.style.opacity = 1;
+    }
+    </script>
+</body>
+</html>
