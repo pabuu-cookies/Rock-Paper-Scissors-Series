@@ -4,181 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock-Paper-Scissors</title>
-    <style>
-        body {
-          position:fixed;
-          background-image: url(RPS.png);
-          font-family: Arial, sans-serif;
-          text-align: center;
-        }
-        #result {
-          position: fixed;
-          font-size: 5vh;
-          color: black;
-          margin-top:45vh ;
-          margin-left: 44vw;
-          opacity: 0; 
-          transition: opacity 1s ease-in-out 0.5s; 
-          z-index : 1000;
-        }
-        button {
-            background-color: burlywood;
-            color: rgb(15, 15, 15);
-            font-weight: bold;
-            padding: 0.75vw 2vh;
-            border: none;
-            border-radius: 1vh;
-            cursor: pointer;
-        }
-        button:active {
-            background-color: #7a3f08; /* Change background color */
-            border: 0.05vw solid #e9e7e5; /* Add border */
-        }
-        #player{
-            position: fixed; /* Positioning the div relative to the viewport */
-            bottom: 0; /* Aligning the div to the bottom */
-            margin-bottom: 10vh;
-            left: 50%;  /* Centering the div horizontally */
-            transform: translateX(-50%);
-            color: black;
-            font-size: 5vh;
-        }
-        #player *{
-            margin-bottom:1vh;
-        }
-        #computer{
-            position: fixed; /* Positioning the div relative to the viewport */
-            top: 0; /* Aligning the div to the bottom */
-            margin-top: 10vh;
-            margin-left: 50vw;  /* Centering the div horizontally */
-            transform: translateX(-10vw);
-            color: black;
-            font-size: 5vh;
-        }
-        #sidebar {
-            position: fixed;
-            top: 0; 
-            left: 0;
-            width: 100%; 
-            background-color: #08044462; 
-            padding: 2.5vh; 
-            display: flex;  
-            align-items: center;
-            justify-content: space-between;
-        }
-        #sidebar button {
-            margin-right:  3.5vw ;
-            justify-content: space-evenly; 
-            
-        } 
-        #sidebar b {
-            color: rgba(255, 255, 255, 0.61);
-            text-align: left;
-            margin-left: 1vw;
-            font-size: 3vw;
-            font-weight: 120;
-            font-family: 'Gill Sans';
-        }
-        @keyframes slidein {
-            from {
-                transform: translateY(-2vh);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(-8vh);
-                opacity: 1;
-            }
-        }
-        .player_images {
-            position: fixed;
-            top: 62vh;
-            left: 45vw;
-            max-width: 30vw; 
-            max-height: 20vh; 
-            opacity: 0; 
-            animation: slidein 0.3s linear 0s forwards;
-        }
-        @keyframes slideout {
-            from {
-                transform: translateY(10vh) scaleY(-1) ;
-                opacity: 1;
-            }
-            to {
-                transform: translateY(14vh) scaleY(-1) ;
-                opacity: 1;
-            }
-        }
-        .computer_images {
-            position: fixed;
-            top: 10vh;
-            left: 45vw;
-            max-width: 30vw; 
-            max-height: 20vh; 
-            opacity: 0;
-            animation: slideout 0.3s linear 0s forwards;
-        }
-        #table {
-            background-color: #da070780; 
-            padding: 1vw; 
-            position: fixed; 
-            margin-top: 30vh;
-            margin-left: 1vw; 
-            table-layout: fixed; 
-            border-radius: 2vh; 
-            width: 22vw; 
-        }
-        #dynamicText{
-            font-size:3vw;
-            color:#ff0000;
-            margin-top: 10vh;
-            margin-left: 68vw;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
     <div id="result"></div>
-    <div id="scoreboard"></div>
-    <canvas id="confetti"></canvas> 
-    <aside id="sidebar">
-        <b><a href="index.html">Rock Paper Scissors</a></b>
-        <button id = "anotherround" onclick="AnotherRound()">Play Again</button>
-        <button id = "bestofthree" onclick="window.location.href='rounds.html?bestOf=3'">Best Of Three</button>
-        <button id = "bestoffive" onclick="window.location.href='rounds.html?bestOf=5'">Best Of Five</button>
-    </aside>
-    <div id="computer">
-        <p><b>computer's choice:</b></p>
-    </div> 
-    <div id="player">
-        <p><b>Your choice:</b></p>
-        <button id = "rock" onclick="play('rock')">Rock</button>
-        <button id= "paper" onclick="play('paper')">Paper</button>
-        <button id ="scissors" onclick="play('scissors')">Scissors</button>
-    </div>
-        
-<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const totalrounds = urlParams.get('bestOf');
-    console.log(totalrounds);
-    if (totalrounds==3){
-        document.getElementById,('bestofthree').disabled=true;
-    }
-    else if(totalrounds==5){
-        document.getElementById('bestoffive').disabled=true;
-    }
-    else{
-        console.log('3 ra 5 bahek aru value aaunaii mildaina ta ');
-    }
-    let roundsPlayed = 0;
-    let playerWins = 0;
-    let computerWins = 0;
-    console.log('best of:', totalrounds,'played:', roundsPlayed);
-        document.getElementById("scoreboard").innerHTML=`
+    <div id="scoreboard" >
         <table id="table">
-            <thead style="color:white; max-width:100%;
-                          overflow: hidden; 
-                          text-overflow: ellipsis; 
-                          border-spacing: 1vw;"s>
+            <thead>
                 <tr>
                     <td>Round</td>
                     <td>Computer</td>
@@ -193,163 +25,37 @@
                 </tr>
             </tbody>
         </table>`;
-    console.log('we are now at playing',totalrounds, 'having completed',roundsPlayed,'till now');
-    function AnotherRound(){
-        location.reload();
-    }
-    function displayimages(choice, classname){
-        if (choice == 'rock'){
-            var button = document.getElementById('rock');
-            if (classname == "player_images"){
-                button.style.opacity = '0.5'; 
-            }
-            var image = document.createElement('img');
-            image.src = 'rock.jpeg'; // Set the image source
-            image.alt = 'Rock';
-            image.classList.add(classname)
-            document.body.appendChild(image);
-        }
-        else if (choice== 'paper'){
-            var button = document.getElementById('paper');
-            if (classname == "player_images"){
-                button.style.opacity = '0.5'; 
-            }
-            var image = document.createElement('img');
-            image.src = 'paper.jpeg'; // Set the image source
-            image.alt = 'paper';
-            image.classList.add(classname)
-            document.body.appendChild(image);
-        }
-        else if (choice=='scissors'){
-            var button = document.getElementById('scissors');
-            if (classname == "player_images"){
-                button.style.opacity = '0.5'; 
-            }
-            var image = document.createElement('img');
-            image.src = 'scissors.png'; // Set the image source
-            image.alt = 'scissors';
-            image.classList.add(classname)
-            document.body.appendChild(image);
-        }
-    }
-    function throwConfetti(resultis){
-        var canvas=document.querySelector('#confetti');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        console.log(canvas.width, canvas.height, window.innerWidth, innerHeight);
-        var jsConfetti = new JSConfetti({ canvas });
-        if (resultis =="It's a tie!"){
-                jsConfetti.addConfetti({
-                    emojis: ['💫', '🌸'],
-                    emojiSize: 30,
-                    confettiNumber: 100,
-                })
-        }
-        else if (resultis =="You Won!"){
-                jsConfetti.addConfetti({
-                    emojis: ['✨','🎈'],
-                    emojiSize: 30,
-                    confettiNumber: 100,
-                })
-        }
-        else if (resultis =='You Lost!'){
-                jsConfetti.addConfetti({
-                    emojis: ['🤓','⚡'],
-                    emojiSize: 30,
-                    confettiNumber: 100, 
-                })
-        }
-    }
-    
-    function play(playerChoice) {
-        document.getElementById('rock').disabled = true;
-        document.getElementById('paper').disabled = true;
-        document.getElementById('scissors').disabled = true;    
-        roundsPlayed = roundsPlayed + 1;
-        console.log('totalrounds:',totalrounds,'rounds:', roundsPlayed,'computer:', computerWins, 'player:', playerWins);
-        displayimages(playerChoice,'player_images');
-        var choices = ['rock', 'paper', 'scissors'];
-        var computerChoice = choices[Math.floor(Math.random() * choices.length)];
-        displayimages(computerChoice,'computer_images');
-            var result;
-            if (playerChoice === computerChoice) {
-                result = "It's a tie!";
-            } else if (
-                (playerChoice === 'rock' && computerChoice === 'scissors') ||
-                (playerChoice === 'paper' && computerChoice === 'rock') ||
-                (playerChoice === 'scissors' && computerChoice === 'paper')
-            ) {
-                result= "You won!";
-                playerWins++;
-            } else {
-                result = "You lost!";
-                computerWins++;
-            }
-        console.log('rounds:', roundsPlayed,'computer:', computerWins, 'player:', playerWins);
-        if (roundsPlayed <= totalrounds){
-            document.getElementById("tablebody").innerHTML=`
-            <tr>
-                <td>${roundsPlayed}</td>
-                <td>${computerWins}</td>
-                <td>${playerWins}</td>
-            </tr>`;
-            var resultText = document.getElementById('result'); 
-            console.log('ek');
-            resultText.textContent = result; 
-            resultText.style.opacity = 1;
-            if (roundsPlayed < totalrounds){
-                setTimeout(function() {
-                    document.getElementById('rock').disabled = false ;
-                    document.getElementById('rock').style.opacity=1 ;
-                    document.getElementById('paper').disabled = false ;
-                    document.getElementById('paper').style.opacity=1;
-                    document.getElementById('scissors').disabled = false ;
-                    document.getElementById('scissors').style.opacity=1;
-                    document.getElementsByClassName('player_images').opacity=0;
-                    console.log('opacity, disabled haru chaliraxa ta ');
-                    document.getElementsByClassName('computer_images').opacity=0;
-                    resultText.style.opacity = 0;
-                    var textElement = document.createElement('p');
-                    textElement.textContent = 'Next Round';
-                    textElement.id = 'dynamicText';
-                    document.body.appendChild(textElement);
-                    if ("vibrate" in navigator) {
-                        navigator.vibrate(20); 
-                        console.log('vibration');// Vibrate for 200 milliseconds
-                    } else {
-                        console.log("Vibration not supported");
-                    }
-                    setTimeout(function(){
-                        document.body.removeChild(textElement);
-                    },1000);
-                }, 1500);
-            }
-        }
-        if (roundsPlayed== totalrounds){
-            if (computerWins > playerWins){
-                result = "You Lost!";
-            }
-            else if (computerWins < playerWins){
-                result = "You Won!";
-            }
-            else if (computerWins == playerWins){
-                result = "It's a tie!";
-            }
-            setTimeout(function(){
-                var audio = new Audio();
-                audio.src = 'rock-paper-scissors.wav';
-                audio.play();
-                throwConfetti(result);
-                var resultText = document.getElementById('result'); 
-                console.log('ek');
-                resultText.textContent = result; 
-                resultText.style.opacity = 1;
-            }, 2100);
-        }
-        else if (totalrounds < roundsPlayed){
-            console.log('yo ta aaunaii nahuney chijj');
-        } 
-    }
-    </script>
+    </div>
+    <canvas id="confetti"></canvas> 
+    <div class="sidebar">
+        <img src="RPS.png" alt="coverpage" onclick="window.location.href='index.html'"></img>
+        <div id="buttons">
+        <button id = "anotherround" onclick="AnotherRound()">Play Again</button>
+        <button id = "bestofthree" onclick="window.location.href='rounds.html?bestOf=3'">Best Of Three</button>
+        <button id = "bestoffive" onclick="window.location.href='rounds.html?bestOf=5'">Best Of Five</button>
+        </div>
+        <p id="dynamicText">Next Round</p>
+    </div>
+    <div id="topbar">
+        <b>Rock Paper Scissors</b>
+    </div>
+    <div id="computer">
+        <p><b>computer</b></p>
+    </div> 
+    <div id="player">
+        <p><b>You</b></p>
+        <button id = "rock" onclick="play('rock')">
+            <img src="rock.jpeg" alt="Rock"></img>
+        </button>
+        <button id ="scissors" onclick="play('scissors')">
+            <img src="scissors.png" alt="Scissors"></img>
+        </button>
+        <button id= "paper" onclick="play('paper')">
+            <img src="paper.jpeg" alt="Paper"></img>
+        </button>
+    </div>
+        
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script src="rounds.js"></script>
 </body>
 </html>
